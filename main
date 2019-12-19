@@ -1,3 +1,5 @@
+//note, when pasting this into visual studio, remember to install the allegro pack from NuGet
+
 #include <iostream>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -7,15 +9,28 @@ using namespace std;
 int main() {
 
   al_init();
+  al_init_image_addon();
   
   int width = 640, height = 480;
+  
+  boolean gameState = true;
   
   ALLEGRO_DISPLAY* DISPLAY = al_create_display(width, height);
   ALLEGRO_EVENT_QUEUE * queue = al_create_event_queue();
   ALLEGRO_TIMER* timer60 = al_create_timer(1.0 / 60);
   al_start_timer(timer60);
   
-  
   al_register_event_source(queue, timer60);
-
+  
+  while (gameState) {
+    
+    ALLEGRO_EVENT* event;
+    al_wait_for_event(queue, &event);
+    
+    if (event.type = ALLEGRO_EVENT_TIMER) {
+    al_clear_to_colour(al_map_rgb(0, 0, 0,));
+    al_flip_display();
+    }
+    
+    
   }
