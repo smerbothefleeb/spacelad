@@ -1,3 +1,5 @@
+design doc for wacky space lad game
+
 small planets that you drill into to get resources
 
 build ships to trade resources with other players
