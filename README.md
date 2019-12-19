@@ -6,6 +6,6 @@ orders come in and you collect resources to complete them
 
 you can research tech to scan planets to see what resources are in them
 
-endgame tech is harvesting a star
+endgame tech is harvesting a star - then you have to manage the star collapsing
 
-build factory planets to refine ores - then you have to manage the star collapsing
+build factory planets to refine ores 
