@@ -6,31 +6,63 @@
 
 using namespace std;
 
+void bmpfollowmouse(ALLEGRO_BITMAP *bmp, int factor);
+
 int main() {
 
-  al_init();
-  al_init_image_addon();
-  
-  int width = 640, height = 480;
-  
-  bool gameState = true;
-  
-  ALLEGRO_DISPLAY* DISPLAY = al_create_display(width, height);
-  ALLEGRO_EVENT_QUEUE * queue = al_create_event_queue();
-  ALLEGRO_TIMER* timer60 = al_create_timer(1.0 / 60);
-  al_start_timer(timer60);
-  
-  al_register_event_source(queue, timer60);
-  
-  while (gameState) {
-    
-    ALLEGRO_EVENT* event;
-    al_wait_for_event(queue, &event);
-    
-    if (event.type = ALLEGRO_EVENT_TIMER) {
-    al_clear_to_colour(al_map_rgb(0, 0, 0,));
-    al_flip_display();
+    al_init();  
+    al_init_image_addon();
+    al_install_mouse();
+
+    int width = 640, height = 480;
+    int midwidth = width / 2, midheight = height / 2;
+
+    bool gameState = true;
+
+    ALLEGRO_DISPLAY* display = al_create_display(width, height);
+    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
+    ALLEGRO_TIMER* timer60 = al_create_timer(1.0 / 60);
+    al_start_timer(timer60);
+
+    ALLEGRO_BITMAP* back = NULL;
+    back = al_load_bitmap("back.png");
+    assert(back != NULL);
+
+    ALLEGRO_BITMAP* mid = NULL;
+    mid = al_load_bitmap("mid.png");
+    assert(mid != NULL);
+    al_convert_mask_to_alpha(mid, al_map_rgb(0, 0, 0));
+    int midx = 0;
+    int midy = 0;
+
+    al_register_event_source(queue, al_get_timer_event_source(timer60));
+    al_register_event_source(queue, al_get_mouse_event_source());
+
+    while (true) {
+
+        ALLEGRO_EVENT event;
+        al_wait_for_event(queue, &event);
+
+        if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
+            midx = (event.mouse.x + midwidth) / 2;
+            midy = (event.mouse.y + midheight) / 2;
+        }
+
+        if (event.type == ALLEGRO_EVENT_TIMER) {
+            al_draw_bitmap(back, 0, 0 , 0);
+            al_draw_bitmap(mid, midx, midy, 0);
+
+            al_flip_display();
+        }
+
+        
     }
+    al_destroy_display(display);
+    return 0;
+}
+
+void bmpfollowmouse(ALLEGRO_BITMAP *bmp, int factor) {
+    int middlex = al_get_bitmap_width(bmp);
+    int middley = al_get_bitmap_height(bmp);
     
-    
-  }
+}
